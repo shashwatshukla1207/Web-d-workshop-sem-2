@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FIFA Football Game</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    color:white;
+    background:url("fifa-bg.jpg") center/cover fixed no-repeat;
+}
+
+.overlay{
+    min-height:100vh;
+    background:rgba(0,0,0,0.75);
+}
+
+header{
+    text-align:center;
+    padding:30px;
+}
+
+header h1{
+    color:#00ff99;
+    text-shadow:0 0 15px #00ff99;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    justify-content:center;
+    padding:0;
+    margin:0;
+    background:black;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    padding:15px 20px;
+    display:block;
+}
+
+nav ul li a:hover{
+    background:#00aa66;
+}
+
+.screen{
+    display:none;
+    width:85%;
+    margin:30px auto;
+    padding:25px;
+    background:rgba(0,0,0,0.7);
+    border-radius:12px;
+}
+
+.screen:target{
+    display:block;
+}
+
+#home{
+    display:block;
+}
+
+h2{
+    color:#00ff99;
+}
+
+.formation{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    text-align:center;
+}
+
+.player{
+    background:#008855;
+    padding:10px;
+    border-radius:6px;
+}
+
+footer{
+    text-align:center;
+    padding:15px;
+    background:black;
+    margin-top:30px;
+}
+</style>
+</head>
+<body>
+<div class="overlay">
+<header>
+<h1>⚽ FIFA FOOTBALL GAME</h1>
+<p>Game Style Football Experience</p>
+</header>
+<nav>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#team">Team</a></li>
+<li><a href="#players">Playing 11</a></li>
+<li><a href="#formation">Formation</a></li>
+<li><a href="#worldcup">World Cup</a></li>
+<li><a href="#rules">Rules</a></li>
+</ul>
+</nav>
+<section id="home" class="screen">
+<h2>Welcome</h2>
+<p>Select your team, manage players and win trophies like a real FIFA game.</p>
+</section>
+<section id="team" class="screen">
+<h2>Team Information</h2>
+<p><b>Team:</b> Argentina</p>
+<p><b>Coach:</b> Lionel Scaloni</p>
+<p><b>Captain:</b> Lionel Messi</p>
+<p><b>FIFA Ranking:</b> Top 5</p>
+</section>
+<section id="players" class="screen">
+<h2>Playing 11</h2>
+<ul>
+<li>GK  Emiliano Martinez</li>
+<li>RB  Molina</li>
+<li>CB Romero</li>
+<li>CB  Otamendi</li>
+<li>LB  Tagliafico</li>
+<li>CM  De Paul</li>
+<li>CM  Enzo Fernandez</li>
+<li>CM  Mac Allister</li>
+<li>RW  Di Maria</li>
+<li>ST Lautaro Martinez</li>
+<li>LW Lionel Messi</li>
+</ul>
+</section>
+<section id="formation" class="screen">
+<h2>Team Formation (4-3-3)</h2>
+<div class="formation">
+<div class="player">LW</div>
+<div class="player">ST</div>
+<div class="player">RW</div>
+<div class="player">CM</div>
+<div class="player">CM</div>
+<div class="player">CM</div>
+<div class="player">LB</div>
+<div class="player">CB</div>
+<div class="player">CB</div>
+<div class="player">RB</div>
+<div class="player">GK</div>
+</div>
+</section>
+<section id="worldcup" class="screen">
+<h2>World Cup Wins</h2>
+<ul>
+<li>Brazil  5 Times</li>
+<li>Germany 4 Times</li>
+<li>Italy  4 Times</li>
+<li>Argentina 3 Times</li>
+<li>France  2 Times</li>
+</ul>
+</section>
+<section id="rules" class="screen">
+<h2>Football Rules</h2>
+<ul>
+<li>Each team has 11 players</li>
+<li>Match duration is 90 minutes</li>
+<li>Only goalkeeper can use hands</li>
+<li>Offside rule applies</li>
+<li>Team with more goals wins</li>
+</ul>
+</section>
+<footer>
+<p>© FIFA Football Game </p>
+<p><b>Name - Shashwat shukla</b></p>
+</footer>
+</div>
+</body>
+</html>
