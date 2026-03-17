@@ -4,28 +4,129 @@
         <h2 id="demo">Hello students</h2>
    
 <script>
-    let day = 5;
-    switch(day){
-        case 1 :
-        console.log("Monday");
-        break;
-         case 2 :
-        console.log("Tuesday");
-        break;
-         case 3 :
-        console.log("Wednesday");
-        break;
-         case 4 :
-        console.log("Thursday");
-        break;
-         case 5 :
-        console.log("Friday");
-        break;
-         default :
-        console.log("Weekend");
-        break;
-        
+//     let day = 5;
+//     switch(day){
+//         case 1 :
+//         console.log("Monday");
+//         break;
+//          case 2 :
+//         console.log("Tuesday");
+//         break;
+//          case 3 :
+//         console.log("Wednesday");
+//         break;
+//          case 4 :
+//         console.log("Thursday");
+//         break;
+//          case 5 :
+//         console.log("Friday");
+//         break;
+//          default :
+//         console.log("Weekend");
+//         break;
+//         }
+//         let marks = 80;
+//         if(marks>=50){
+//             console.log("Pass");
+//         }
+//         else {
+//             console.log("Fail");
+//         }
 
+//         for ( let i=1;i<=5;i++){
+//             console.log(i);
+//             i++;
+//         }
+
+
+//         for ( let i=1;i<=5;i++){
+//             console.log("*");
+            
+//         }
+//         let i =1;
+//         while(i<=5){
+//             console.log(i);
+//             i++;
+//         }
+//     let i=1;
+//     do{
+//             console.log(i);
+//             i++;
+//         }
+//         while (i<=5);
+
+// let numbers = [1,2,3,4];
+// let square = numbers.map(num=> num*num);
+// console.log(square);
+
+let numbers = [10,20,30];
+let sum = numbers.reduce((total,num)=>total+num,0);
+console.log(sum);
+// for loop 
+        // let arr = [10, 20, 30, 40];
+
+        // for (let i = 0; i < arr.length; i++) {
+        //     console.log(arr[i]);
+        // }
+//for each loop 
+        let arr = [10, 20, 30, 40];
+
+        arr.forEach(function(value) {
+            console.log(value);
+        });
+
+// star pattern 
+
+        for (let i = 1; i <= 4; i++) {
+    let row = "";
+    for (let j = 1; j <= i; j++) {
+        row += "* ";
+    }
+    console.log(row);
+}
+
+// inverse star pattern
+    for (let i = 4; i >= 1; i--) {
+        let row = "";
+        for (let j = 1; j <= i; j++) {
+            row += "* ";
+        }
+        console.log(row);
+    }
+
+//pyramid structure 
+    //         let n = 4;
+
+    // for (let i = 1; i <= n; i++) {
+    //     let row = "";
+
+    //     for (let j = 1; j <= n - i; j++) {
+    //         row += " ";
+    //     }
+
+    //     for (let j = 1; j <= i; j++) {
+    //         row += "* ";
+    //     }
+
+    //     console.log(row);
+    // }
+
+// reverse pyramid 
+
+    let n = 4;
+
+    for (let i = n; i >= 1; i--) {
+        let row = "";
+
+        for (let j = 1; j <= n - i; j++) {
+            row += " ";
+        }
+
+        for (let j = 1; j <= i; j++) {
+            row += "* ";
+        }
+
+        console.log(row);
     }
 </script>
 </body>
