@@ -63,3 +63,7 @@ button:hover{
     font-weight: bold;
     color: #333;
 }
+.student-info p {
+    display: block;
+    margin: 5px 0;
+}
