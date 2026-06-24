@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BookWallah | Discover Your Next Read</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      background:linear-gradient(120deg,#fdfbfb,#ebedee);
+      color:#222;
+      transition:0.4s;
+    }
+
+    body.dark{
+      background:#111;
+      color:white;
+    }
+
+    body.dark nav{
+      background:#1a1a1a;
+    }
+
+    body.dark .book,
+    body.dark .feature{
+      background:#222;
+      color:white;
+    }
+
+    body.dark .book-content span{
+      color:#ccc;
+    }
+
+    body.dark footer{
+      background:black;
+    }
+
+    header{
+      background:linear-gradient(90deg,#1d2671,#c33764);
+      color:white;
+      padding:60px 20px;
+      text-align:center;
+    }
+
+    header h1{
+      font-size:50px;
+    }
+
+    header p{
+      margin-top:10px;
+      font-size:18px;
+    }
+
+    header button{
+      margin-top:20px;
+      padding:12px 25px;
+      border:none;
+      border-radius:30px;
+      background:white;
+      color:#c33764;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    header button:hover{
+      transform:scale(1.05);
+    }
+
+    nav{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:25px;
+      padding:15px;
+      background:white;
+      position:sticky;
+      top:0;
+      z-index:100;
+      flex-wrap:wrap;
+    }
+
+    nav a{
+      text-decoration:none;
+      color:#333;
+      font-weight:600;
+    }
+
+    .dark-btn{
+      padding:8px 15px;
+      border:none;
+      border-radius:20px;
+      background:#1d2671;
+      color:white;
+      cursor:pointer;
+    }
+
+    .cart{
+      font-weight:bold;
+      color:#c33764;
+    }
+
+    .search-box{
+      width:300px;
+      padding:10px;
+      border-radius:30px;
+      border:1px solid #ccc;
+      outline:none;
+    }
+
+    .section{
+      width:90%;
+      max-width:1200px;
+      margin:50px auto;
+    }
+
+    .section h2{
+      text-align:center;
+      margin-bottom:10px;
+      font-size:35px;
+    }
+
+    .section p{
+      text-align:center;
+      margin-bottom:40px;
+      color:#555;
+    }
+
+    .books{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .book{
+      background:white;
+      border-radius:15px;
+      overflow:hidden;
+      box-shadow:0 10px 25px rgba(0,0,0,0.1);
+      transition:0.4s;
+      position:relative;
+    }
+
+    .book:hover{
+      transform:translateY(-10px);
+    }
+
+    .book img{
+      width:100%;
+      height:300px;
+      object-fit:cover;
+    }
+
+    .book-content{
+      padding:20px;
+    }
+
+    .book-content h3{
+      margin-bottom:5px;
+    }
+
+    .book-content span{
+      color:#666;
+      font-size:14px;
+    }
+
+    .price{
+      margin:15px 0;
+      font-size:22px;
+      font-weight:bold;
+      color:#1d2671;
+    }
+
+    .book-content button{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      background:linear-gradient(90deg,#1d2671,#c33764);
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      margin-top:10px;
+      transition:0.3s;
+    }
+
+    .book-content button:hover{
+      opacity:0.9;
+    }
+
+    .wishlist{
+      position:absolute;
+      top:10px;
+      right:10px;
+      font-size:24px;
+      cursor:pointer;
+    }
+
+    .features{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:20px;
+      margin-top:50px;
+    }
+
+    .feature{
+      background:white;
+      padding:30px;
+      border-radius:15px;
+      text-align:center;
+      box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    footer{
+      background:#1d2671;
+      color:white;
+      text-align:center;
+      padding:25px;
+      margin-top:60px;
+    }
+
+    .toast{
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      background:#1d2671;
+      color:white;
+      padding:15px 20px;
+      border-radius:10px;
+      display:none;
+    }
+
+    #cartModal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:9999;
+}
+
+#cartModal .cart-box{
+  background:white;
+  width:400px;
+  max-height:80vh;
+  overflow-y:auto;
+  margin:100px auto;
+  padding:20px;
+  border-radius:10px;
+}
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>BookWallah</h1>
+    <p>Where Stories, Knowledge & Imagination Meet</p>
+
+    <button onclick="scrollToBooks()">
+      Explore Collection
+    </button>
+  </header>
+
+  <nav>
+
+    <a href="#">Home</a>
+    <a href="#">Best Sellers</a>
+    <a href="#">New Arrivals</a>
+    <a href="#">Categories</a>
+    <a href="#">Contact</a>
+
+    <input type="text"
+           class="search-box"
+           id="searchBar"
+           placeholder="Search books...">
+
+    <button class="dark-btn" onclick="darkMode()">
+      Dark Mode
+    </button>
+
+    <div class="cart" onclick="openCart()">
+  🛒 Cart:
+  <span id="cart-count">0</span>
+</div>
+
+  </nav>
+
+  <section class="section" id="books-section">
+
+    <h2>Handpicked For You</h2>
+
+    <p>Books that readers love and recommend</p>
+
+    <div class="books" id="books-container">
+
+      <div class="book">
+
+        <div class="wishlist"
+             onclick="wishlist('The Psychology of Money')">
+             ❤️
+        </div>
+
+        <img src="https://m.media-amazon.com/images/I/71XEsXS5RlL._AC_UL480_FMwebp_QL65_.jpg">
+
+        <div class="book-content">
+
+          <h3>The Psychology of Money</h3>
+
+          <span>Morgan Housel</span>
+
+          <div class="price">₹349</div>
+
+          <button onclick="addToCart('The Psychology of Money',349)">
+            Add To Cart
+          </button>
+
+        </div>
+      </div>
+
+      <div class="book">
+
+        <div class="wishlist"
+             onclick="wishlist('Deep Work')">
+             ❤️
+        </div>
+
+        <img src="https://m.media-amazon.com/images/I/61zt25yYrCL._AC_UY327_FMwebp_QL65_.jpg">
+
+        <div class="book-content">
+
+          <h3>Deep Work</h3>
+
+          <span>Cal Newport</span>
+
+          <div class="price">₹499</div>
+
+          <button onclick="addToCart('Deep Work',499)">
+            Add To Cart
+          </button>
+
+        </div>
+      </div>
+
+      <div class="book">
+
+        <div class="wishlist"
+             onclick="wishlist('Think And Grow Rich')">
+             ❤️
+        </div>
+
+        <img src="https://m.media-amazon.com/images/I/51cibmdlSHL._AC_UY327_FMwebp_QL65_.jpg">
+
+        <div class="book-content">
+
+          <h3>Think And Grow Rich</h3>
+
+          <span>Napoleon Hill</span>
+
+          <div class="price">₹399</div>
+
+          <button onclick="addToCart('Think And Grow Rich',399)">
+            Add To Cart
+          </button>
+
+        </div>
+      </div>
+
+      <div class="book">
+
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+
+        <img src="https://m.media-amazon.com/images/I/61go3pwTLYL._AC_UY327_FMwebp_QL65_.jpg">
+
+        <div class="book-content">
+
+          <h3>Attitude Is Everything</h3>
+
+          <span>Jeff Keller</span>
+
+          <div class="price">₹299</div>
+
+          <button onclick="addToCart('Attitude Is Everything',299)">
+            Add To Cart
+          </button>
+
+        </div>
+      </div>
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/715qi-cIbML._AC_UY327_FMwebp_QL65_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>Don't Believe Everything You Think </h3>
+          <span>Joseph Nguyen</span>
+          <div class="price">₹599</div>
+          <button  onclick="addToCart('Attitude Is Everything',599)">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/71XEsXS5RlL._AC_UL480_FMwebp_QL65_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>The Psychology of Money</h3>
+          <span>Morgan Housel</span>
+          <div class="price">₹349</div>
+          <button  onclick="addToCart('Attitude Is Everything',349)">Add to Cart</button>
+        </div>
+      </div> 
+
+        <div class="book">
+          <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/61ZmaR2Dw9L._AC_SR405%2C405_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>The Art of Money Getting </h3>
+          <span>P T Barnum</span>
+          <div class="price">₹599</div>
+          <button  onclick="addToCart('Attitude Is Everything',599)">Add to Cart</button>
+        </div>
+      </div>
+
+       <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://images-eu.ssl-images-amazon.com/images/I/71HX66uNvfL._AC_UL165_SR165,165_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>The Richest Man in Babylon</h3>
+          <span>George S. Clason</span>
+          <div class="price">₹599</div>
+          <button  onclick="addToCart('Attitude Is Everything',599)">Add to Cart</button>
+        </div>
+      </div>
+
+       <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/41mZlUMtDwL._SX342_SY445_FMwebp_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>Before You Start Up Your Dream</h3>
+          <span>Pankaj Goyal </span>
+          <div class="price">₹599</div>
+          <button  onclick="addToCart('Attitude Is Everything',599)">Add to Cart</button>
+        </div>
+      </div>
+
+       <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/61PIpidSThL._AC_UL480_FMwebp_QL65_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>The Diary of CEO:The 33 Laws of Business and Life</h3>
+          <span> Steven BartlettL</span>
+          <div class="price">₹599</div>
+          <button  onclick="addToCart('Attitude Is Everything',599)">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/810u9MkT3SL._AC_UY327_FMwebp_QL65_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>The Hard Thing about Hard Thing Buisness </h3>
+          <span>Ben Horowitz </span>
+          <div class="price">₹349</div>
+          <button  onclick="addToCart('Attitude Is Everything',349)">Add to Cart</button>
+        </div>
+      </div> 
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/61zt25yYrCL._AC_UY327_FMwebp_QL65_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>DEEP WORK: RULES FOR FOCUSED SUCCESS IN A DISTRACTED WORLD</h3>
+          <span>Cal Newport</span>
+          <div class="price">₹349</div>
+          <button  onclick="addToCart('Attitude Is Everything',349)">Add to Cart</button>
+        </div>
+      </div> 
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/51cibmdlSHL._AC_UY327_FMwebp_QL65_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>Think and Grow Rich by Napoleon Hill - Self-help Classic </h3>
+          <span>Napoleon Hill</span>
+          <div class="price">₹349</div>
+          <button onclick="addToCart('Attitude Is Everything',349)">Add to Cart</button>
+        </div>
+      </div> 
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/71oCD+IDBkL._AC_UY327_FMwebp_QL65_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>Countdown to Riches: 21 Days of Wealth-Attracting Habits</h3>
+          <span>Rhonda Byrne</span>
+          <div class="price">₹349</div>
+          <button onclick="addToCart('Attitude Is Everything',349)">Add to Cart</button>
+        </div>
+      </div> 
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/61xivWmExiL._AC_SR405%2C405_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>The Mountain Is You in Life</h3>
+          <span>Brianna Wiest</span>
+          <div class="price">₹349</div>
+          <button onclick="addToCart('Attitude Is Everything',349)">Add to Cart</button>
+        </div>
+      </div> 
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/81-QxsWwwmL._AC_SR405%2C405_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>7 Habits Of Highly Effective Teenagers</h3>
+          <span>SEAN COVEY</span>
+          <div class="price">₹349</div>
+          <button onclick="addToCart('Attitude Is Everything',349)">Add to Cart</button>
+        </div>
+      </div> 
+
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/61pxGP2E0gL._AC_UY327_FMwebp_QL65_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>World's Greatest Artists </h3>
+          <span>Wonder House Books</span>
+          <div class="price">₹349</div>
+          <button onclick="addToCart('Attitude Is Everything',349)">Add to Cart</button>
+        </div>
+      </div> 
+
+      <div class="book">
+        <div class="wishlist"
+             onclick="wishlist('Attitude Is Everything')">
+             ❤️
+        </div>
+        <img src="https://m.media-amazon.com/images/I/71bpaJVjPRL._AC_UY327_FMwebp_QL65_.jpg" alt="Book">
+        <div class="book-content">
+          <h3>Ghost Hunter Gaurav</h3>
+          <span>Abhirup Dhar and Indian Paranormal Society</span>
+          <div class="price">₹349</div>
+          <button onclick="addToCart('Attitude Is Everything',349)">Add to Cart</button>
+        </div>
+      </div> 
+    </div>
+
+    </div>
+
+
+    <div class="features">
+
+      <div class="feature">
+        <h3>🚚 Fast Delivery</h3>
+        <p>Quick and safe delivery across India.</p>
+      </div>
+
+      <div class="feature">
+        <h3>💳 Secure Payments</h3>
+        <p>100% safe payment methods.</p>
+      </div>
+
+      <div class="feature">
+        <h3>📚 Premium Collection</h3>
+        <p>Best books from top authors.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <footer>
+    <p>
+      © 2026 BookWallah |
+      Designed By Shashwat Shukla
+    </p>
+  </footer>
+  <div id="cartModal"
+style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+">
+
+<div style="
+background:white;
+width:400px;
+margin:100px auto;
+padding:20px;
+border-radius:10px;
+">
+
+<h2>Your Cart</h2>
+
+<div id="cartItems"></div>
+
+<button onclick="closeCart()">
+  Close
+</button>
+
+</div>
+</div>
+
+  <div class="toast" id="toast"></div>
+
+  <script >
+    
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+document.getElementById("cart-count").innerText = cart.length;
+
+function addToCart(book, price){
+
+  cart.push({
+    name: book,
+    price: price
+  });
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  document.getElementById("cart-count").innerText =
+    cart.length;
+
+  showToast(book + " added to cart 🛒");
+}
+
+document.getElementById("searchBar")
+.addEventListener("keyup", function(){
+
+  let value = this.value.toLowerCase();
+
+  let books = document.querySelectorAll(".book");
+
+  books.forEach(function(book){
+
+    let text = book.innerText.toLowerCase();
+
+    if(text.includes(value)){
+      book.style.display = "block";
+    }
+    else{
+      book.style.display = "none";
+    }
+
+  });
+
+});
+
+function darkMode(){
+
+  document.body.classList.toggle("dark");
+
+  localStorage.setItem(
+    "darkMode",
+    document.body.classList.contains("dark")
+  );
+
+}
+
+if(localStorage.getItem("darkMode") === "true"){
+  document.body.classList.add("dark");
+}
+
+function wishlist(book){
+
+  showToast(book + " added to wishlist ❤️");
+
+}
+
+function showToast(message){
+
+  let toast = document.getElementById("toast");
+
+  toast.innerText = message;
+
+  toast.style.display = "block";
+
+  setTimeout(function(){
+
+    toast.style.display = "none";
+
+  },2000);
+
+}
+
+function scrollToBooks(){
+
+  document.getElementById("books-section")
+  .scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+function openCart(){
+
+  let cartItems =
+    document.getElementById("cartItems");
+
+  cartItems.innerHTML = "";
+
+  if(cart.length === 0){
+
+    cartItems.innerHTML =
+      "<p>Cart is Empty</p>";
+
+  }else{
+
+    cart.forEach((item,index)=>{
+
+      cartItems.innerHTML += `
+      <p>
+      ${item.name} - ₹${item.price}
+
+      <button
+      onclick="removeItem(${index})">
+      Remove
+      </button>
+
+      </p>
+      `;
+
+    });
+
+  }
+
+  document.getElementById("cartModal")
+    .style.display = "block";
+}
+
+function closeCart(){
+
+  document.getElementById("cartModal")
+    .style.display = "none";
+}
+
+function removeItem(index){
+
+  cart.splice(index,1);
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  document.getElementById("cart-count")
+    .innerText = cart.length;
+
+  openCart();
+
+  showToast("Item removed ❌");
+}
+ </script>
+
+</body>
+</html>

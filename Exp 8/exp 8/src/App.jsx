@@ -19,6 +19,9 @@ function App() {
           <button onClick={decrement}>Decrement (-)</button>
             <button onClick={reset}>Reset</button>
       </div>
+        <p> Name- Shashwat Shukla</p>
+  <p> 2503201001061</p>
+  <p>2025b01011273</p>
     </div>
   );
 }
